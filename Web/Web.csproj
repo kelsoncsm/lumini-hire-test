@@ -6,19 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\DataTables\**" />
-    <Content Remove="wwwroot\DataTables\**" />
-    <EmbeddedResource Remove="wwwroot\DataTables\**" />
-    <None Remove="wwwroot\DataTables\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Views\Pesquisa\Index - Copy %282%29.cshtml" />
-    <Content Remove="Views\Pesquisa\Index - Copy.cshtml" />
-    <Content Remove="Views\Pesquisa\_Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />
@@ -30,10 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LuminiHireApi\LuminiHireApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="scripts\" />
   </ItemGroup>
 
 </Project>

@@ -18,12 +18,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public JsonResult PopulationChart()
-        {
-            var populationList = PopulationDataAccessaLayer.GetCityPopulationList();
-            return Json(populationList);
-        }
+       
 
     }
 }
