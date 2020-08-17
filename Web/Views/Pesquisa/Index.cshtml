@@ -1,0 +1,104 @@
+﻿
+<h2>Lista</h2>
+
+
+<table style="width:100%">
+
+    <tr>
+        <td>
+            Região: <input type="text" id="txtname" style="width:150px" /> &nbsp;
+            <button onclick="Search();return false;">Search</button>
+        </td>
+    </tr>
+
+</table>
+
+<table id="myDataTable" class="table table-striped">
+
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Cidade</th>
+            <th>Habitantes 2020</th>
+            <th>Habitantes 2019</th>
+            <th>Habitantes 2018</th>
+            <th>Região</th>
+        </tr>
+    </thead>
+
+</table>
+
+
+
+<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+  
+    <script src="~/js/jquery.dataTables.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            CarregaDados();
+        });
+
+        function CarregaDados(txtcampo) {
+
+
+            var url = "http://localhost:61598/api/city";
+
+            if (txtcampo != undefined )
+                url = "http://localhost:61598/api/city/region/" + txtcampo;
+
+
+            $('#myDataTable').DataTable().clear().destroy();
+
+
+            var oTable = $("#myDataTable").DataTable({
+
+                "language": {
+                    "lengthMenu": "Exibe _MENU_ Registros por página",
+                    "search": "Procurar",
+                    "paginate": { "previous": "Retornar", "next": "Avançar" },
+                    "zeroRecords": "Nada foi encontrado",
+                    "info": "Exibindo página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Sem registros",
+                    "infoFiltered": "(filtrado de _MAX_ regitros totais)"
+                },
+
+                "processing": true,
+                "filter": false,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "Todos"]],
+                "pageLength": 10,
+                "ajax": {
+                    "url": url,
+                    "type": "GET",
+                    "dataType": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+
+                    { "data": "cityId", "autowidth": true },
+                    { "data": "cityName", "autowidth": true },
+                    { "data": "populationYear2020", "autowidth": true },
+                    { "data": "populationYear2019", "autowidth": true },
+                    { "data": "populationYear2018", "autowidth": true },
+                    { "data": "region", "autowidth": true }
+
+                ]
+            });
+        }
+
+
+
+        function Search() {
+
+            CarregaDados($('#txtname').val())
+
+        }
+
+
+
+    </script>
+
+}
