@@ -42,6 +42,31 @@ namespace Montreal.IdNet.Administrativo.WebApi.Controllers
         }
 
 
+        /// <summary>
+        /// Pesquisar Cartórios.
+        /// </summary>
+        /// <param name="searchModel"></param>
+        [HttpGet]
+        [Route("regiao")]
+        public async Task<ActionResult<List<City>>> GetPorRegiao([FromServices] DataNetContext context)
+        {
+
+            var query = context.Citys
+                 .GroupBy(o => new { o.Region })
+     .Select(g => new
+     {
+         Qtd = g.Count(),
+         Title = g.Key.Region
+     });
+
+
+
+            return this.Ok(await query.ToListAsync());
+        }
+
+
+
+
 
     }
 }

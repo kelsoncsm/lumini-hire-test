@@ -20,7 +20,7 @@
      
 
         $.ajax({
-            url: "http://localhost:61598/api/city",
+            url: "http://localhost:61598/api/city/regiao",
             contentType: "application/json; charset=utf-8",
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -49,57 +49,205 @@
 
     function PopulationChartColumn(data) {
         var dataArray = [
-            ['Região', '2020','2019', '2018']
+            ['Titulo', 'Quatidade']
         ];
         $.each(data, function (i, item) {
-            dataArray.push([item.region, item.populationYear2020, item.populationYear2019, item.populationYear2018]);
+            dataArray.push([item.title, item.qtd]);
         });
         var data = google.visualization.arrayToDataTable(dataArray);
-        var options = {
-            title: 'População Brasil(Cidade) ',
-            chartArea: {
-                width: '50%'
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            // style column
+            {
+                calc: function (dt, row) {
+                    if ((dt.getValue(row, 1) >= 0) && (dt.getValue(row, 1) <= 201)) {
+                        return 'red'; 
+                    } else if ((dt.getValue(row, 1) > 201) && (dt.getValue(row, 1) <= 279)) {
+                        return 'yellow';
+                    } else if ((dt.getValue(row, 1) > 279) && (dt.getValue(row, 1) <= 516)) {
+                        return 'blue';
+                    } else if ((dt.getValue(row, 1) > 516) && (dt.getValue(row, 1) <= 569)) {
+                        return 'orange';
+                    } else {
+                        return 'green';
+                    }
+                },
+                type: 'string',
+                role: 'style'
             },
-            colors: ['#b0120a', '#7b1fa2', '#ffab91', '#d95f02'],
-            hAxis: {
-                title: 'Quantidade Populacão',
-                minValue: 0
+            // annotation column
+            {
+                calc: 'stringify',
+                sourceColumn: 1,
+                type: 'string',
+                role: 'annotation'
+            }
+        ]);
+
+        var options = {
+            title: '',
+            titleTextStyle: {
+                fontSize: 16,
+                bold: true
+            },
+            backgroundColor: 'transparent',
+            chartArea: {
+                left: 80,
+                top: 30,
+                bottom: 60,
+                right: 10
+            },
+            legend: {
+                textStyle: {
+                    fontSize: 11
+                }
             },
             vAxis: {
-                title: 'Total'
+                title: '',
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 10
+                },
+                titleTextStyle: {
+                    fontSize: 12,
+                    italic: false,
+                    bold: true
+                }
+            },
+            hAxis: {
+                title: 'Total Cidades Por Região',
+                gridlines: {
+                    count: 22
+                },
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 11
+                },
+                titleTextStyle: {
+                    fontSize: 12,
+                    italic: false,
+                    bold: true
+                }
+            },
+            pointSize: 3,
+            pointShape: 'circle',
+            annotations: {
+                alwaysOutside: true,
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 9,
+                    color: '#000000',
+                    opacity: 1
+                }
             }
         };
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 
-        chart.draw(data, options);
+        var chartDiv = document.getElementById('chart_div');
+        var chart = new google.visualization.BarChart(chartDiv);
+        chart.draw(view, options)
         return false;
     }
 
     function PopulationChartLine(data) {
         var dataArray = [
-            ['Região', '2020', '2019', '2018']
+            ['Titulo', 'Quatidade']
         ];
         $.each(data, function (i, item) {
-            dataArray.push([item.region, item.populationYear2020, item.populationYear2019, item.populationYear2018]);
+            dataArray.push([item.title, item.qtd]);
         });
         var data = google.visualization.arrayToDataTable(dataArray);
-        var options = {
-            title: 'População Brasil(Cidade) ',
-            chartArea: {
-                width: '50%'
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            // style column
+            {
+                calc: function (dt, row) {
+                    if ((dt.getValue(row, 1) >= 0) && (dt.getValue(row, 1) <= 201)) {
+                        return 'red';
+                    } else if ((dt.getValue(row, 1) > 201) && (dt.getValue(row, 1) <= 279)) {
+                        return 'yellow';
+                    } else if ((dt.getValue(row, 1) > 279) && (dt.getValue(row, 1) <= 516)) {
+                        return 'blue';
+                    } else if ((dt.getValue(row, 1) > 516) && (dt.getValue(row, 1) <= 569)) {
+                        return 'orange';
+                    } else {
+                        return 'green';
+                    }
+                },
+                type: 'string',
+                role: 'style'
             },
-            colors: ['#b0120a', '#7b1fa2', '#ffab91', '#d95f02'],
-            hAxis: {
-                title: 'Quantidade Populacão',
-                minValue: 0
+            // annotation column
+            {
+                calc: 'stringify',
+                sourceColumn: 1,
+                type: 'string',
+                role: 'annotation'
+            }
+        ]);
+
+        var options = {
+            title: '',
+            titleTextStyle: {
+                fontSize: 16,
+                bold: true
+            },
+            backgroundColor: 'transparent',
+            chartArea: {
+                left: 80,
+                top: 30,
+                bottom: 60,
+                right: 10
+            },
+            legend: {
+                textStyle: {
+                    fontSize: 11
+                }
             },
             vAxis: {
-                title: 'Total'
+                title: '',
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 10
+                },
+                titleTextStyle: {
+                    fontSize: 12,
+                    italic: false,
+                    bold: true
+                }
+            },
+            hAxis: {
+                title: 'Total Cidades Por Região',
+                gridlines: {
+                    count: 22
+                },
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 11
+                },
+                titleTextStyle: {
+                    fontSize: 12,
+                    italic: false,
+                    bold: true
+                }
+            },
+            pointSize: 3,
+            pointShape: 'circle',
+            annotations: {
+                alwaysOutside: true,
+                textStyle: {
+                    fontName: 'Arial',
+                    fontSize: 9,
+                    color: '#000000',
+                    opacity: 1
+                }
             }
         };
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
 
-        chart.draw(data, options);
+        var chartDiv = document.getElementById('chart_div2');
+        var chart = new google.visualization.PieChart(chartDiv);
+        chart.draw(view, options)
         return false;
     }
 </script> 
